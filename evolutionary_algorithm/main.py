@@ -8,31 +8,35 @@ from fitness import compute_fitness
 from reset import reset_to_start
 
 # How long each genome gets to run (in seconds)
-RUN_DURATION = 500
+RUN_DURATION = 30
 
 def eval_genome(genome, config, bridge):
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     state_history = []
     start_time = time.time()
+    frame_count = 0
 
     while time.time() - start_time < RUN_DURATION:
         state = bridge.get_state()
         if state is None:
             break
 
-        inputs = (
-            state['x'],
-            state['y'],
-            state['vx'],
-            state['vy'],
-            float(state['onGround']),
-            float(state['jumping']),
-            float(state['dashing']),
-        )
+        # Only send input every 10 frames
+        if frame_count % 10 == 0:
+            inputs = (
+                state['x'],
+                state['y'],
+                state['vx'],
+                state['vy'],
+                float(state['onGround']),
+                float(state['jumping']),
+                float(state['dashing']),
+            )
+            output = net.activate(inputs)
+            perform_action(output)
 
-        output = net.activate(inputs)
-        perform_action(output)
         state_history.append(state)
+        frame_count += 1
 
         if state['health'] <= 0:
             break
