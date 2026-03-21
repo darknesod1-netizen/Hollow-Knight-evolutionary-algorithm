@@ -1,0 +1,27 @@
+# Hollow Knight local path config - different on each machine
+mod/HKPath.props
+
+# Build outputs
+mod/bin/
+mod/obj/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Experiment outputs (optional - you may want to track some of these)
+experiments/logs/
+experiments/checkpoints/
+
+# OS stuff
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.cursor/
+*.user
+.vs/
