@@ -15,6 +15,7 @@ namespace HKMod
         private TcpListener? _server;
         private Thread? _serverThread;
         private TcpClient? _client;
+        private int _frameCount = 0;
 
         public override void Initialize()
         {
@@ -30,9 +31,14 @@ namespace HKMod
         {
             _server = new TcpListener(IPAddress.Loopback, 11000);
             _server.Start();
-            Log("TCP server started on port 11000, waiting for connection...");
-            _client = _server.AcceptTcpClient();
-            Log("Python EA connected!");
+            Log("TCP server started on port 11000");
+
+            while (true)
+            {
+                Log("Waiting for connection...");
+                _client = _server.AcceptTcpClient();
+                Log("Python EA connected!");
+            }
         }
 
         private void OnHeroUpdate()
@@ -41,6 +47,9 @@ namespace HKMod
 
             var hero = HeroController.instance;
             if (hero == null) return;
+
+            _frameCount++;
+            if (_frameCount % 3 != 0) return;
 
             var rb = hero.GetComponent<Rigidbody2D>();
 
