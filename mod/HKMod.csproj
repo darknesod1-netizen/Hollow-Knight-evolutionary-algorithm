@@ -22,10 +22,17 @@
       <HintPath>$(HKPath)\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>$(HKPath)\hollow_knight_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" 
-          DestinationFolder="$(HKPath)\hollow_knight_Data\Managed\Mods\HKMod\" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(HKPath)\hollow_knight_Data\Managed\Mods\HKMod\" />
   </Target>
 </Project>
