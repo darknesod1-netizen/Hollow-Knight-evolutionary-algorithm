@@ -21,7 +21,7 @@ relevant movement — horizontal progress early on, then vertical progress durin
 climb, and a combination of both near the end. A speed bonus is also applied for 
 agents that complete the level faster.
 
-## Project Structure
+## Structure
 - `mod/` — C# Hollow Knight mod that exports game state over TCP
 - `evolutionary_algorithm/` — Python NEAT implementation and fitness logic
 - `evolutionary_algorithm/config.txt` — NEAT hyperparameters
