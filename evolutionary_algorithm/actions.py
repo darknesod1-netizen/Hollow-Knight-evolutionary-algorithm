@@ -6,8 +6,7 @@ KEY_MAP = {
     0: 'left',
     1: 'right',
     2: 'z',      # jump
-    3: 'x',      # dash
-    4: 'c',      # attack
+    3: 'x',      # attack
 }
 
 # How long each keypress lasts in seconds

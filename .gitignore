@@ -15,6 +15,7 @@ venv/
 # Experiment outputs (optional - you may want to track some of these)
 experiments/logs/
 experiments/checkpoints/
+evolutionary_algorithm/checkpoints/
 
 # OS stuff
 .DS_Store

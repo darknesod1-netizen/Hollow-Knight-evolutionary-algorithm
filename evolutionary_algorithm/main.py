@@ -59,8 +59,7 @@ def eval_genomes(genomes, config, bridge):
 
 
 def run():
-    # Load NEAT config
-    config_path = os.path.join(os.path.dirname(__file__), 'config.txt')
+    config_path = os.path.join(os.path.dirname(file), 'config.txt')
     config = neat.Config(
         neat.DefaultGenome,
         neat.DefaultReproduction,
@@ -69,15 +68,33 @@ def run():
         config_path
     )
 
-    # Create population
-    population = neat.Population(config)
+    checkpoint_dir = os.path.join(os.path.dirname(file), 'checkpoints')
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    checkpoint_prefix = os.path.join(checkpoint_dir, 'neat-checkpoint-')
 
-    # Add reporters so we can see progress
+    # Restore from last checkpoint if one exists
+    checkpoints = [f for f in os.listdir(checkpoint_dir) if f.startswith('neat-checkpoint-')]
+    if checkpoints:
+        latest = max(checkpoints, key=lambda f: int(f.split('-')[-1]))
+        latest_path = os.path.join(checkpoint_dir, latest)
+        print(f"Restoring from checkpoint: {latest_path}")
+        population = neat.Checkpointer.restore_checkpoint(latest_path)
+    else:
+        print("No checkpoint found, starting fresh.")
+        population = neat.Population(config)
+
+    # Reporters
     population.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
 
-    # Connect to the game
+    # Save a checkpoint every 5 generations
+    population.add_reporter(neat.Checkpointer(
+        generation_interval=5,
+        filename_prefix=checkpoint_prefix
+    ))
+
+    # Connect to game
     bridge = GameBridge()
     print("Launch Hollow Knight and load your save, then press Enter...")
     input()
@@ -86,7 +103,7 @@ def run():
     # Run NEAT
     winner = population.run(
         lambda genomes, config: eval_genomes(genomes, config, bridge),
-        n=100  # number of generations
+        n=100
     )
 
     print(f"\nBest genome: {winner}")
