@@ -59,7 +59,7 @@ def eval_genomes(genomes, config, bridge):
 
 
 def run():
-    config_path = os.path.join(os.path.dirname(file), 'config.txt')
+    config_path = os.path.join(os.path.dirname(__file__), 'config.txt')
     config = neat.Config(
         neat.DefaultGenome,
         neat.DefaultReproduction,
@@ -68,7 +68,7 @@ def run():
         config_path
     )
 
-    checkpoint_dir = os.path.join(os.path.dirname(file), 'checkpoints')
+    checkpoint_dir = os.path.join(os.path.dirname(__file__), 'checkpoints')
     os.makedirs(checkpoint_dir, exist_ok=True)
     checkpoint_prefix = os.path.join(checkpoint_dir, 'neat-checkpoint-')
 
