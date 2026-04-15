@@ -2,6 +2,7 @@ import neat
 import os
 import time
 import pyautogui
+import threading
 from bridge import GameBridge
 from actions import perform_action
 from fitness import compute_fitness
@@ -19,7 +20,7 @@ def eval_genome(genome, config, bridge):
     while time.time() - start_time < RUN_DURATION:
         state = bridge.get_state()
         if state is None:
-            break
+            continue
 
         # Only send input every 10 frames
         if frame_count % 10 == 0:
@@ -33,7 +34,9 @@ def eval_genome(genome, config, bridge):
                 float(state['dashing']),
             )
             output = net.activate(inputs)
-            perform_action(output)
+            t = threading.Thread(target=perform_action, args=(output,))
+            t.daemon = True
+            t.start()
 
         state_history.append(state)
         frame_count += 1
