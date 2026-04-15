@@ -47,32 +47,30 @@ Step 3 — Install Scarab
 4. Launch the game and confirm you see the MOD string in the top left
 
 Step 4 — Clone the repo
-
+```
 git clone https://github.com/darknessd1-netizen/Hollow-Knight-evolutionary-algorithm.git
-
 cd Hollow-Knight-evolutionary-algorithm
-
+```
 Step 5 — Set up the mod
 1. Create mod/HKPath.props with your PC's HK path:
-
+```
 <Project>
   <PropertyGroup>
     <HKPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight</HKPath>
   </PropertyGroup>
 </Project>
-
+```
 3. Build and install the mod:
-
+```
 cd mod
-
 dotnet build
-
+```
 The post-build event will automatically copy the DLL to your HK mods folder.
 
 Step 6 — Install Python dependencies
-
+```
 py -m pip install neat-python pyautogui
-
+```
 Step 7 — Set up Benchwarp
 1. Launch Hollow Knight and load your King's Pass save
 2. Enable hotkeys in Benchwarp settings
