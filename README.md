@@ -31,11 +31,58 @@ agents that complete the level faster.
 - `evolutionary_algorithm/main.py` — Main training loop
 
 ## Setup
-1. Own Hollow Knight on Steam and install version `1.5.78.11833` via the Betas tab
-2. Install Scarab mod manager and use it to install DebugMod and Benchwarp
-3. Build the mod in `/mod` and copy the DLL to your HK mods folder
-4. Install Python dependencies: `py -m pip install neat-python pyautogui`
-5. Launch Hollow Knight, load a King's Pass save, then run `py main.py`
+Step 1 — Install Hollow Knight
+Buy and install Hollow Knight on Steam if not already done.
+
+Step 2 — Switch to the correct game version
+1. Right-click Hollow Knight in Steam → Properties
+2. Go to Betas tab
+3. Select "previous version 1.5.78.11833"
+4. Let Steam download the downgrade
+
+Step 3 — Install Scarab
+1. Download Scarab from https://github.com/fifty-six/Scarab/releases
+2. Run it and let it auto-detect your HK installation
+3. Install DebugMod and Benchwarp
+4. Launch the game and confirm you see the MOD string in the top left
+
+Step 4 — Clone the repo
+git clone https://github.com/darknessd1-netizen/Hollow-Knight-evolutionary-algorithm.git
+cd Hollow-Knight-evolutionary-algorithm
+
+Step 5 — Set up the mod
+1. Create mod/HKPath.props with your PC's HK path:
+<Project>
+  <PropertyGroup>
+    <HKPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight</HKPath>
+  </PropertyGroup>
+</Project>
+2. Build and install the mod:
+cd mod
+dotnet build
+The post-build event will automatically copy the DLL to your HK mods folder.
+
+Step 6 — Install Python dependencies
+py -m pip install neat-python pyautogui
+
+Step 7 — Set up Benchwarp
+1. Launch Hollow Knight and load your King's Pass save
+2. Enable hotkeys in Benchwarp settings
+3. Test that WD while paused warps back to that spot
+
+Step 8 - Set up DebugMod (optional)
+1. Launch Hollow Knight and load your King's Pass save
+2. In hotkeys for DebugMod set up hotkeys for increasing/decreasing tick rate
+3. Enable Invincibility in "Cheats"
+4. Increase/decrease tick rate (not faster than x25 than normal or else the algorithm may not send inputs fast enough)
+5. Increase/decrease max run time in main.py
+
+Step 8 — Run the algorithm
+1. Launch Hollow Knight and load your King's Pass save
+2. Open a terminal in the repo folder:
+cd evolutionary_algorithm
+py main.py
+3. Press Enter when prompted and the algorithm will start
 
 ## Authors
 - Daniil Ostrovskij
