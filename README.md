@@ -57,9 +57,10 @@ Step 5 — Set up the mod
     <HKPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight</HKPath>
   </PropertyGroup>
 </Project>
-2. Build and install the mod:
+3. Build and install the mod:
 cd mod
 dotnet build
+
 The post-build event will automatically copy the DLL to your HK mods folder.
 
 Step 6 — Install Python dependencies
