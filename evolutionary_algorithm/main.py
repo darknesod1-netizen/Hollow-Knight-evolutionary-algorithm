@@ -2,13 +2,14 @@ import neat
 import os
 import time
 import pyautogui
+import threading
 from bridge import GameBridge
 from actions import perform_action
 from fitness import compute_fitness
 from reset import reset_to_start
 
 # How long each genome gets to run (in seconds)
-RUN_DURATION = 30
+RUN_DURATION = 10
 
 def eval_genome(genome, config, bridge):
     net = neat.nn.FeedForwardNetwork.create(genome, config)
@@ -19,10 +20,9 @@ def eval_genome(genome, config, bridge):
     while time.time() - start_time < RUN_DURATION:
         state = bridge.get_state()
         if state is None:
-            break
+            continue  # Don't break, just skip this frame
 
-        # Only send input every 10 frames
-        if frame_count % 10 == 0:
+        if frame_count % 5 == 0:
             inputs = (
                 state['x'],
                 state['y'],
@@ -33,7 +33,10 @@ def eval_genome(genome, config, bridge):
                 float(state['dashing']),
             )
             output = net.activate(inputs)
-            perform_action(output)
+
+            t = threading.Thread(target=perform_action, args=(output,))
+            t.daemon = True
+            t.start()
 
         state_history.append(state)
         frame_count += 1
@@ -59,7 +62,7 @@ def eval_genomes(genomes, config, bridge):
 
 
 def run():
-    config_path = os.path.join(os.path.dirname(file), 'config.txt')
+    config_path = os.path.join(os.path.dirname(__file__), 'config.txt')
     config = neat.Config(
         neat.DefaultGenome,
         neat.DefaultReproduction,
@@ -68,7 +71,7 @@ def run():
         config_path
     )
 
-    checkpoint_dir = os.path.join(os.path.dirname(file), 'checkpoints')
+    checkpoint_dir = os.path.join(os.path.dirname(__file__), 'checkpoints')
     os.makedirs(checkpoint_dir, exist_ok=True)
     checkpoint_prefix = os.path.join(checkpoint_dir, 'neat-checkpoint-')
 
@@ -88,9 +91,9 @@ def run():
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
 
-    # Save a checkpoint every 5 generations
+    # Save a checkpoint every generation
     population.add_reporter(neat.Checkpointer(
-        generation_interval=5,
+        generation_interval=1,
         filename_prefix=checkpoint_prefix
     ))
 

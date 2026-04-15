@@ -11,6 +11,8 @@ def reset_to_start():
 
     # Type WD to warp to deployed bench
     pyautogui.press('w')
-    time.sleep(0.1)
     pyautogui.press('d')
-    time.sleep(1.5)  # Wait for warp animation to complete
+    time.sleep(4)  
+    pyautogui.press('escape')
+    time.sleep(0.5)
+    pyautogui.press('escape')

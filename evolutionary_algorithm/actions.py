@@ -10,7 +10,7 @@ KEY_MAP = {
 }
 
 # How long each keypress lasts in seconds
-PRESS_DURATION = 0.05
+PRESS_DURATION = 0.001
 
 def perform_action(output_activations):
     """
