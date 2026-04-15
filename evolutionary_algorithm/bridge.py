@@ -2,7 +2,7 @@ import socket
 import json
 
 class GameBridge:
-    """Handles TCP communication with the Hollow Knight mod."""
+    # Handles TCP communication with the Hollow Knight mod.
 
     def __init__(self, host='localhost', port=11000):
         self.host = host
@@ -16,7 +16,7 @@ class GameBridge:
         print(f"Connected to game on {self.host}:{self.port}")
 
     def get_state(self):
-        """Read one state frame from the game."""
+        # Read one state frame from the game.
         while '\n' not in self.buffer:
             data = self.client.recv(1024).decode('utf-8')
             if not data:

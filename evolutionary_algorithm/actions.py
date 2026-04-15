@@ -13,11 +13,11 @@ KEY_MAP = {
 PRESS_DURATION = 0.001
 
 def perform_action(output_activations):
-    """
-    Takes NEAT network outputs (list of 5 floats)
-    and presses the corresponding keys if activation > 0.5.
-    Multiple keys can be pressed at once.
-    """
+    
+    # Takes NEAT network outputs (list of 4 floats)
+    # and presses the corresponding keys if activation > 0.5.
+    # Multiple keys can be pressed at once.
+    
     keys_to_press = []
     for i, activation in enumerate(output_activations):
         if activation > 0.5:

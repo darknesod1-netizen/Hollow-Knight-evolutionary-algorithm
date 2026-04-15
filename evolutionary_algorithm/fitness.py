@@ -15,16 +15,16 @@ CHECKPOINT_THRESHOLD = 1.0
 MAX_RUN_TIME = 500.0
 
 def compute_fitness(state_history, elapsed_time):
-    """
-    Compute fitness for one genome based on its run history.
+    
+    # Compute fitness for one genome based on its run history.
 
-    Segments:
-    - Before CP1: reward max X progress
-    - After CP1, before CP2: reward max Y progress
-    - After CP2: reward max X + max Y*2 (Y weighted more since there is a fork and the player should take the way to the top)
-    - Bonus for reaching the exit
-    - Speed bonus: only applied if exit is reached
-    """
+    # Segments:
+    # - Before CP1: reward max X progress
+    # - After CP1, before CP2: reward max Y progress
+    # - After CP2: reward max X + max Y*2 (Y weighted more since there is a fork and the player should take the way to the top)
+    # - Bonus for reaching the exit
+    # - Speed bonus: only applied if exit is reached
+    
     if not state_history:
         return 0.0
 

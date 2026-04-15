@@ -20,8 +20,8 @@ def eval_genome(genome, config, bridge):
     while time.time() - start_time < RUN_DURATION:
         state = bridge.get_state()
         if state is None:
-            continue  # Don't break, just skip this frame
-
+            continue 
+        #every five frames send input
         if frame_count % 5 == 0:
             inputs = (
                 state['x'],
